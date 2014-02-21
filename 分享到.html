@@ -22,10 +22,15 @@
 
 	function startMove(iTarget) {
 		var oDiv=document.getElementById('div1');
-		clearInterval(timer);
+		clearInterval(timer);//关闭之前的定时器，保证只有一个定时器，保证点击多次也能匀速
 		timer=setInterval(function () {
 			var speed=0;
-			if (oDiv.offsetLeft<iTarget) {speed=10;} else{speed=-10;};
+			if (oDiv.offsetLeft<iTarget) {
+				speed=10;
+			} 
+			else{
+				speed=-10;
+			};
 			if (oDiv.offsetLeft==iTarget) {
 				clearInterval(timer);
 			} 

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>缓冲运动</title>
+<style type="text/css">
+#div1{width: 200px;height: 50px;background: red;left: 0;top: 50px;position: absolute;}
+#div2{width: 200px;height: 50px;background: red;left: 0;top: 150px;position: absolute;}
+#div3{width: 200px;height: 50px;background: red;left: 0;top: 250px;position: absolute;}
+</style>
+<script type="text/javascript">
+// window.onload=function () {
+// 	var oDiv=document.getElementById('div1');
+// 	oDiv.onmouseover=function () {
+// 		startMove (300);
+// 	}
+// 	oDiv.onmouseout=function () {
+// 		startMove (0);
+// 	}
+// }
+var timer=null;
+	function startMove (iTarget) {
+		var oDiv=document.getElementById('div1');
+		var oTxt=document.getElementById('dis');
+
+		clearInterval(timer);//关闭之前的定时器，保证只有一个定时器，保证点击多次也能匀速
+		timer=setInterval(function () {
+			var speed=(iTarget-oDiv.offsetLeft)/10;//除以缩放系数，解决初始值太大的问题
+			speed=speed>0?Math.ceil(speed):Math.floor(speed);
+				oDiv.style.left=oDiv.offsetLeft+speed+'px';
+				oTxt.value=oDiv.style.left+','+speed;
+		},30);
+	}
+</script>
+
+</head>
+<body>
+<input type="button" value="开始运动" onclick="startMove(300)">
+<input id="dis" type="txt" value="">
+<div id="div1"></div>
+<div id="div2"></div>
+<div id="div3"></div>
+</body>
+</html>
