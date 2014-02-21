@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>右边侧边栏</title>
+<style type="text/css">
+#div1{width: 100px;height: 200px;background: red;position: absolute;right: 0;bottom: 0;}
+</style>
+<script type="text/javascript">
+window.onscroll=function () {
+	var oDiv=document.getElementById('div1');
+	var scrollTop=document.documentElement.scrollTop||document.body.scrollTop;
+	startMove(parseInt((document.documentElement.clientHeight-oDiv.offsetHeight)/2+scrollTop));
+}   
+var timer=null;
+function startMove (iTarget) {
+	var oDiv=document.getElementById('div1');
+	var oTxt=document.getElementById('txt');
+	clearInterval(timer);
+	timer=setInterval(function () {
+		var speed=(iTarget-oDiv.offsetTop)/8;
+		speed=speed>0?Math.ceil(speed):Math.floor(speed);
+	
+		if (iTarget==oDiv.offsetTop) {
+			clearInterval(timer);
+		}
+		else{
+			oDiv.style.top=oDiv.offsetTop+speed+'px';
+			oTxt.value=oDiv.style.top+','+speed;
+		};
+	},30);
+}
+</script>
+</head>
+<body style="height:2000px;">
+<input type="text" value="" id="txt" style="position:fixed;right:0;top:0;">
+<div id="div1"></div>
+</body>
+</html>
