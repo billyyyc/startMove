@@ -1,40 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>缓冲运动</title>
+	<title>多个变宽</title>
 <style type="text/css">
 #div1{width: 200px;height: 50px;background: red;left: 0;top: 50px;position: absolute;}
 #div2{width: 200px;height: 50px;background: red;left: 0;top: 150px;position: absolute;}
 #div3{width: 200px;height: 50px;background: red;left: 0;top: 250px;position: absolute;}
 </style>
 <script type="text/javascript">
-// window.onload=function () {
-// 	var oDiv=document.getElementById('div1');
-// 	oDiv.onmouseover=function () {
-// 		startMove (300);
-// 	}
-// 	oDiv.onmouseout=function () {
-// 		startMove (0);
-// 	}
-// }
+window.onload=function () {
+	var oDiv=document.getElementsByTagName('div');
+	for (var i = 0; i < oDiv.length; i++) {	
+		oDiv[i].onmouseover=function () {
+			startMove (this,300);
+		}
+		oDiv[i].onmouseout=function () {
+			startMove (this,100);
+		}
+	};//多个对象，除了函数加入obj，还需要在执行的时候进行一次循环，循环中采用this。
+}
 var timer=null;
-	function startMove (iTarget) {
-		var oDiv=document.getElementById('div1');
+	function startMove (obj,iTarget) {
 		var oTxt=document.getElementById('dis');
 
-		clearInterval(timer);//关闭之前的定时器，保证只有一个定时器，保证点击多次也能匀速
-		timer=setInterval(function () {
-			var speed=(iTarget-oDiv.offsetLeft)/10;//除以缩放系数，解决初始值太大的问题
+		clearInterval(obj.timer);//关闭之前的定时器，保证只有一个定时器，保证点击多次也能匀速
+		obj.timer=setInterval(function () {
+			var speed=(iTarget-obj.offsetWidth)/10;//除以缩放系数，解决初始值太大的问题
 			speed=speed>0?Math.ceil(speed):Math.floor(speed);
-				oDiv.style.left=oDiv.offsetLeft+speed+'px';
-				oTxt.value=oDiv.style.left+','+speed;
+				obj.style.width=obj.offsetWidth+speed+'px';
+				oTxt.value=obj.style.width+','+speed;
 		},30);
 	}
 </script>
 
 </head>
 <body>
-<input type="button" value="开始运动" onclick="startMove(300)">
+<input type="button" value="开始运动" onclick="startMove(div1,300)">
 <input id="dis" type="txt" value="">
 <div id="div1"></div>
 <div id="div2"></div>
