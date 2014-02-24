@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>多个div淡入淡出</title>
+<style type="text/css">
+	div{width: 100px;height: 100px;background: red;margin-right: 20px;float: left;filter:alpha(opacity:30);opacity: 0.3;}
+</style>
+<script type="text/javascript">
+window.onload=function () {
+	oDiv=document.getElementsByTagName('div');
+	for (var i = 0; i < oDiv.length; i++) {
+		oDiv[i].alpha=30;
+		oDiv[i].onmouseover=function () {
+			startMove (this,100)
+		}
+		oDiv[i].onmouseout=function () {
+			startMove (this,30)
+		}
+	};
+}
+
+	function startMove (obj,iTarget) {
+		clearInterval(obj.timer);
+		obj.timer=setInterval(function () {
+			// if (iTarget>obj.alpha) {
+			// 	speed=10;
+			// }
+			// else{
+			// 	speed=-10;
+			// };//1、匀速运动
+			var speed=(iTarget-obj.alpha)/6;
+			speed=speed>0?Math.ceil(speed):Math.floor(speed);//2、缓冲运动
+			if (iTarget==obj.alpha) {
+				clearInterval(obj.timer);
+			}
+			else{
+				obj.alpha+=speed;
+				obj.style.filter='alpha(opacity:'+obj.alpha+')';
+				obj.style.opacity=obj.alpha/100;
+			};
+		},30)
+	}
+</script>
+</head>
+<body>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+</body>
+</html>
